@@ -2,11 +2,11 @@ import React from 'react'
 import Header from '../others/Header'
 import NumberedTaskList from '../others/NumberedTaskList'
 import TaskList from '../TaskList/TaskList'
-const EmployeeDashboard = () => {
+const EmployeeDashboard = ({user, setUser}) => {
   return (
     <div className='p-10 h-screen bg-[#1C1C1C]'>
-        <Header/>
-        <NumberedTaskList/>
+        <Header user={user} setUser={setUser}/>
+        <NumberedTaskList user={user}/>
         <TaskList/>
     </div>
   )

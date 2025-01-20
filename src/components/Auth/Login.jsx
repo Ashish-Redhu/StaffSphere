@@ -1,17 +1,43 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from "react"
+import { AuthContext } from '../../context/AuthProvider'
+const Login = ({setUser}) => {
 
-const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
- const handleSubmit = (e) => {
+    const data = useContext(AuthContext);
+    // console.log("data in login is: ", data); // This will show the structure of data
+
+    const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+
+    // Check if data is not null and is an object
+    if (data && typeof data === 'object') {
+      // Check in adminData
+      const adminUser  = data.adminData.find(user => user.email === email && user.password === password);
+      if (adminUser ) {
+        setUser (adminUser );
+        setEmail('');
+        setPassword('');
+        return;
+      }
+
+      // Check in employeesData
+      const employeeUser  = data.employeesData.find(user => user.email === email && user.password === password);
+      if (employeeUser ) {
+        setUser (employeeUser );
+        setEmail('');
+        setPassword('');
+        return;
+      }
+    }
+
+    alert('Invalid credentials');
     setEmail('');
     setPassword('');
- }
+  };
+
   return (
     <div className='flex items-center justify-center h-screen w-screen'>
         <div className='border-2 border-emerald-600 rounded-md p-20 '>
